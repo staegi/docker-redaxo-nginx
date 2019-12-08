@@ -9,7 +9,7 @@ map $http_x_forwarded_proto $fastcgi_https {
 }
 
 server {
-    server_name {{ getenv "NGINX_SERVER_NAME" "wordpress" }};
+    server_name {{ getenv "NGINX_SERVER_NAME" "redaxo" }};
     listen 80 default_server{{ if getenv "NGINX_HTTP2" }} http2{{ end }};
 
     root {{ getenv "NGINX_SERVER_ROOT" "/var/www/html/" }};
