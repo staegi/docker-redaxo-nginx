@@ -27,6 +27,7 @@ server {
         fastcgi_split_path_info ^(.+?\.php)(/.*)$;
         fastcgi_pass php;
         track_uploads uploads 60s;
+        fastcgi_read_timeout 300;
     }
 
     charset utf-8;
