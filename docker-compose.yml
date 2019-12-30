@@ -9,14 +9,14 @@ services:
     depends_on:
       - redaxo
     volumes:
-      - root:/var/www/html
+      - doc_root:/var/www/html
     ports:
       - 80:80
   redaxo:
     image: tomcat2111/redaxo
     restart: always
     volumes:
-      - root:/var/www/html
+      - doc_root:/var/www/html
     depends_on:
       - mysql
   mysql:
@@ -27,5 +27,28 @@ services:
       MYSQL_DATABASE: redaxo
       MYSQL_USER: redaxo
       MYSQL_PASSWORD: redaxo
+    volumes:
+      - db_data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: redaxo
+      PMA_HOST: mysql
+  webdav:
+    image: sashgorokhov/webdav
+    restart: always
+    ports:
+      - 8888:80
+    volumes:
+      - doc_root:/media
+    environment:
+      USERNAME: redaxo
+      PASSWORD: redaxo
 volumes:
-  root:
+  doc_root:
+  db_data:
